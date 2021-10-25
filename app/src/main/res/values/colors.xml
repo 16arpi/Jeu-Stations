@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#050D9E</color>
+    <color name="colorPrimaryDark">#050D5E</color>
+    <color name="colorAccent">#00C4B3</color>
+    <color name="background">#FFFDED</color>
+    <color name="background_green">#D2E9C9</color>
+    <color name="background_blue">#BDE4F9</color>
+    <color name="border_color">#33000000</color>
+
+    <color name="ratp_vert">#00C4B3</color>
+    <color name="ratp_blue" >#050D9E</color>
+    <color name="m1">#FFCD00</color>
+    <color name="m2">#003CA6</color>
+    <color name="m3">#837902</color>
+    <color name="m33">#6EC4E8</color>
+    <color name="m4">#CF009E</color>
+    <color name="m5">#FF7E2E</color>
+    <color name="m6">#6ECA97</color>
+    <color name="m7">#FA9ABA</color>
+    <color name="m77">#6ECA97</color>
+    <color name="m8">#E19BDF</color>
+    <color name="m9">#B6BD00</color>
+    <color name="m10">#C9910D</color>
+    <color name="m11">#704B1C</color>
+    <color name="m12">#007852</color>
+    <color name="m13">#6EC4E8</color>
+    <color name="m14">#62259D</color>
+</resources>

@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Jeu des stations</string>
+    <string name="intro_message_title">Attention à la marche, en descendant du train !</string>
+    <string name="intro_message_">
+        Trouvez les stations présentes sur une même ligne, profitez des correspondances pour changer de ligne.
+    </string>
+    <string name="error_message_nostation">Aucune station trouvée</string>
+    <string name="error_message_deja_joue">Station déjà trouvée</string>
+    <string name="error_message_incorrect">Station située sur une ligne différente</string>
+    <string name="error_message_coming_soon">Bientôt disponible</string>
+    <string name="error_message_no_hint_possible">Aucun indice possible. Bon courage !</string>
+    <string name="error_message_hint_fail">Mauvaise réponse ! Vous perdez un point</string>
+
+    <string name="error_message_completed_line">ligne(s) complète(s), bravo !</string>
+
+    <string name="dialog_hint_title">Choisissez la bonne station</string>
+
+    <string name="settings_h2_regles">Règles</string>
+    <string name="settings_h2_regles_p1">Vous devez trouver toutes les stations du métro parisien. Le jeu n\'inclue pas les stations de tramway et de RER.</string>
+    <string name="settings_h2_regles_p2">La seule règle est la suivante : seules les stations présentes sur la ou les mêmes lignes que la station précédente peuvent être ajoutées.</string>
+    <string name="settings_h2_regles_p3">Profitez ainsi des stations avec correspondances (point blanc à la bordure noire) pour changer de ligne.</string>
+    <string name="settings_h2_regles_p4">Vous pouvez à tout moment savoir quelles lignes passent par une station en cliquant dessus.</string>
+    <string name="settings_h2_regles_p4bis">Même si le jeu accepte les erreurs de frappe, vous devez malgré tout écrire le nom complet des stations, comme ils figurent sur le plan de la RATP.</string>
+    <string name="settings_h2_regles_p4ter">Vous pouvez bénéficiez d\'un indice en cliquant sur « ? ». Une liste de 4 stations dont une valide vous sera proposée. +1 en cas de victoire, -1 en cas de défaite.</string>
+    <string name="settings_h2_points">Points</string>
+    <string name="settings_h2_regles_p5">+1 pour une station avec correspondances</string>
+    <string name="settings_h2_regles_p6">+3 pour une station sans correspondance</string>
+    <string name="settings_h2_regles_p6bis">+10 pour une ligne complète</string>
+    <string name="settings_h2_regles_p7">–1 pour une station ajoutée plus d\'une fois</string>
+    <string name="settings_h2_about">À propos</string>
+    <string name="settings_h2_regles_p8"><u>Développé par @Pigeoff</u></string>
+    <string name="settings_h2_regles_p9"><u>Noter l\'application (merci!)</u></string>
+
+    <string name="website_url">https://pigeoff.pw</string>
+    <string name="playstore_url">https://play.google.com/store/apps/details?id=com.pigeoff.station</string>
+
+    <string name="win_message_t" >Felicitations !!! 🎊 🎉 🚇</string>
+    <string name="win_message_m" >Bravo, vous avez gagné au jeu des stations ! Si vous avez terminé le jeu sans tricher, je ne peux que vous encourager d\'envoyer votre CV à la RATP.</string>
+
+</resources>
