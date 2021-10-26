@@ -1,8 +1,10 @@
 # Jeu des stations
 
-![jeu des stations](./preview_play.png)
+![jeu des stations](./assets/preview_play.png)
 
 Jeu android pour retrouver toutes les stations de métro franciliennes.
+
+[<img src="./assets/play.png" width="100">](https://play.google.com/store/apps/details?id=com.pigeoff.station)
 
 ## Règles du jeu
 
@@ -11,6 +13,8 @@ Vous devez trouver toutes les stations du métro parisien. Le jeu n'inclue pas l
 Profitez ainsi des stations avec correspondances (point blanc à la bordure noire) pour changer de ligne. Vous pouvez à tout moment savoir quelles lignes passent par une station en cliquant dessus.
 
 Même si le jeu accepte les erreurs de frappe, vous devez malgré tout écrire le nom complet des stations, comme ils figurent sur le plan de la RATP. Vous pouvez bénéficiez d'un indice en cliquant sur « ? ». Une liste de 4 stations dont une valide vous sera proposée. +1 en cas de victoire, -1 en cas de défaite.
+
+
 
 ## Points
 
