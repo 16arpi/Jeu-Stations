@@ -1,8 +1,10 @@
+![jeu des stations](./assets/preview_play.png)
+
 # Jeu des stations
 
-![jeu des stations](./preview_play.png)
-
 Jeu android pour retrouver toutes les stations de métro franciliennes.
+
+[<img width="150" src="./assets/play.png">](https://play.google.com/store/apps/details?id=com.pigeoff.station)
 
 ## Règles du jeu
 
