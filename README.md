@@ -1,6 +1,6 @@
-# Jeu des stations
-
 ![jeu des stations](./preview_play.png)
+
+# Jeu des stations
 
 Jeu android pour retrouver toutes les stations de métro franciliennes.
 
