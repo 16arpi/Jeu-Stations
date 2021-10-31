@@ -2,9 +2,12 @@ package com.pigeoff.station;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,10 +41,13 @@ public class GameFragment extends Fragment {
 
     private ArrayList<Station> stations;
     private GameAdapter gameAdapter;
+    private SuggestionAdapter suggestionAdapter;
+    private RecyclerView recyclerAutoComplete;
     private RecyclerView recyclerView;
     private Score score;
     private OnSettingsBtnClickListener btnSettingsListener;
     private Utils utils;
+    private SharedPreferences pref;
 
     private TextView textScore;
     private TextView textHighScore;
@@ -78,7 +84,7 @@ public class GameFragment extends Fragment {
 
     public void askForHint() {
         // Making a list of 3 wrong stations and 1 right
-        final List<Station> fourStations = utils.getFourStationsHint(
+        final List<Station> fourStations = Utils.getFourStationsHint(
                 stations,
                 gameAdapter.currentAllStationS(),
                 gameAdapter.currentStation());
@@ -99,20 +105,17 @@ public class GameFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Station selectedStation = fourStations.get(which);
-                            if (utils.isStationAcceptable(selectedStation, gameAdapter.currentStation())) {
+                            if (Utils.isStationAcceptable(selectedStation, gameAdapter.currentStation())) {
                                 gameAdapter.addStation(selectedStation);
                                 score.saveScore(1, textScore, textHighScore);
                             } else {
                                 score.saveScore(-1, textScore, textHighScore);
-                                utils.showMessage(getView(), getString(R.string.error_message_hint_fail));
+                                Utils.showMessage(getView(), getString(R.string.error_message_hint_fail));
                             }
                         }
                     })
                     .show();
-        } else {
-
         }
-
     }
 
     public void gameAction(boolean success, Station s) {
@@ -137,20 +140,20 @@ public class GameFragment extends Fragment {
                         for (Integer l : completedLignes) {
                             showCongrats(
                                     konfettiView,
-                                    new int[] {requireContext().getResources().getColor(utils.getColorFromLigne(l))},
+                                    new int[] {requireContext().getResources().getColor(Utils.getColorFromLigne(l))},
                                     500L);
                         }
                         String str = "+"+completedLignes.size()+" "+getString(R.string.error_message_completed_line);
-                        utils.showMessage(getView(), str);
+                        Utils.showMessage(getView(), str);
                         score.saveScore(completedLignes.size()*10, textScore, textHighScore);
                     }
                     oneMoreStationFound();
                 }
             } else {
-                utils.showMessage(getView(), getString(R.string.error_message_incorrect));
+                Utils.showMessage(getView(), getString(R.string.error_message_incorrect));
             }
         } else {
-            utils.showMessage(getView(), getString(R.string.error_message_nostation));
+            Utils.showMessage(getView(), getString(R.string.error_message_nostation));
         }
     }
 
@@ -174,6 +177,39 @@ public class GameFragment extends Fragment {
         }
     }
 
+    private void getStationsSuggestion(String str) {
+        if (str.length() > 3) {
+            new Thread() {
+                @Override
+                public void run() {
+                    List<Station> suggestions = Utils.getThreeBestStations(stations, gameAdapter.currentAllStationS(), str);
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            suggestionAdapter.setStations(suggestions);
+                        }
+                    });
+                }
+            }.start();
+
+        } else {
+            suggestionAdapter.setStations(new ArrayList<>());
+        }
+    }
+
+    private void onQueryRequest(String txt) {
+        Station station = Utils.getStationFromName(stations, txt);
+
+        Station current = gameAdapter.currentStation();
+        if (current != null && station != null) {
+            boolean success = Utils.isStationAcceptable(gameAdapter.currentStation(), station);
+            gameAction(success, station);
+        } else {
+            gameAction(false, station);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,16 +228,17 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        JSONClient jsonClient = new JSONClient(requireContext());
-
         // Array stations
+        JSONClient jsonClient = new JSONClient(requireContext());
         stations = jsonClient.getStationsFromJSON();
+        pref = getActivity().getSharedPreferences(Utils.PREF, Context.MODE_PRIVATE);
 
         // Elements
         textScore = view.findViewById(R.id.textViewScore);
         textHighScore = view.findViewById(R.id.textViewHighScore);
         textNbStations = view.findViewById(R.id.textViewNbStations);
         recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerAutoComplete = view.findViewById(R.id.recyclerViewAutoComplete);
         btnSettings = view.findViewById(R.id.imageButtonSettings);
         konfettiView = view.findViewById(R.id.viewKonfetti);
         btnHint = view.findViewById(R.id.imageButtonHint);
@@ -232,6 +269,23 @@ public class GameFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(gameAdapter);
 
+        LinearLayoutManager layoutManagerSuggestion = new LinearLayoutManager(this.getContext());
+        layoutManagerSuggestion.setReverseLayout(true);
+        suggestionAdapter = new SuggestionAdapter(getContext(), new ArrayList<>());
+        recyclerAutoComplete.setLayoutManager(layoutManagerSuggestion);
+        recyclerAutoComplete.setAdapter(suggestionAdapter);
+
+        // Setting up suggestion station click
+
+        suggestionAdapter.setOnSuggestionClick(new SuggestionAdapter.OnSuggestionClick() {
+            @Override
+            public void onSuggestionClick(Station station) {
+                editTextStation.setText("");
+                editTextStation.requestFocus();
+                onQueryRequest(station.getStation());
+            }
+        });
+
         // Setting up stations count
         boolean stop = false;
         while (!stop) {
@@ -250,20 +304,32 @@ public class GameFragment extends Fragment {
                     String txt = v.getText().toString();
                     editTextStation.setText("");
                     editTextStation.requestFocus();
-                    Station station = utils.getStationFromName(stations, txt);
-                    Log.i("RECHERCHE", v.getText().toString());
-
-                    Station current = gameAdapter.currentStation();
-                    if (current != null && station != null) {
-                        boolean success = utils.isStationAcceptable(gameAdapter.currentStation(), station);
-                        gameAction(success, station);
-                    } else {
-                        gameAction(false, station);
-                    }
+                    onQueryRequest(txt);
                 }
 
                 recyclerView.scrollToPosition(0);
                 return true;
+            }
+        });
+
+        editTextStation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(pref.getBoolean(Utils.KEY_SUGGESTION, true)) {
+                    getStationsSuggestion(s.toString());
+                } else {
+                    getStationsSuggestion("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }

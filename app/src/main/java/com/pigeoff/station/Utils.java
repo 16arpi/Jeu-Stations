@@ -26,6 +26,7 @@ public class Utils {
     public static final String PREF = "sharedpref";
     public static final String KEY_SCORE = "shareddata";
     public static final String KEY_STARTUP = "sharedstart";
+    public static final String KEY_SUGGESTION = "sharedsuggest";
 
     private static HashMap<Integer, Integer> colorsRessources = new HashMap<>();
     private static HashMap<Integer, String> lignesNames = new HashMap<>();
@@ -108,6 +109,26 @@ public class Utils {
         }
     }
 
+    public static List<Station> getThreeBestStations(List<Station> stations, List<Station> current, String query) {
+        List<Station> suggestions = new ArrayList<>();
+        TreeMap<Integer, Station> probas = new TreeMap<>();
+
+        // simplification of query
+        query = simplifyComplexString(query);
+
+        // simplification of stations name
+        int n = 0;
+        for (Station s : stations) {
+            String simpleStationName = simplifyComplexString(s.getStation());
+            if (simpleStationName.contains(query) && n <3 && !current.contains(s)) {
+                suggestions.add(s);
+                ++n;
+            }
+        }
+
+        return suggestions;
+    }
+
     public static boolean isStationAcceptable(Station preStation, Station nextStation) {
         for (int i : preStation.getLignes()) {
             if (nextStation.getLignes().contains(i)) {
@@ -174,6 +195,27 @@ public class Utils {
             lignes.add(lignesNames.get(l));
         }
         return pre+StringUtils.join(lignes, ", ");
+    }
+
+    public static Station findStationById(List<Station> stations, int id) {
+        for (Station s : stations) {
+            if (s.getId() == id) return s;
+        }
+        return null;
+    }
+    private static int autoCompleteDiff(String str1, String str2) {
+        int min = Math.min(str1.length(), str2.length());
+        int i = 0;
+        int r = 0;
+        while (i < min) {
+            if (str1.charAt(i) == str2.charAt(i)) {
+                r++;
+            } else {
+                break;
+            }
+            ++i;
+        }
+        return r;
     }
 
     private static String simplifyComplexString(String str) {

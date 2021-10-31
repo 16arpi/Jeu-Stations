@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ public class SettingsBottomSheetFragment extends BottomSheetDialogFragment {
     private ImageButton btnClose;
     private TextView txtViewWebsite;
     private TextView txtViewPlay;
+    private Switch switchSuggestion;
 
     @Nullable
     @Override
@@ -41,11 +44,22 @@ public class SettingsBottomSheetFragment extends BottomSheetDialogFragment {
         btnClose = view.findViewById(R.id.imageButtonClose);
         txtViewWebsite = view.findViewById(R.id.textViewWebsite);
         txtViewPlay = view.findViewById(R.id.textViewPlaystore);
+        switchSuggestion = view.findViewById(R.id.switchSuggestions);
 
         btnClose.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragment.dismiss();
+            }
+        });
+
+        // Setting switch state and action
+        boolean state = pref.getBoolean(Utils.KEY_SUGGESTION, true);
+        switchSuggestion.setChecked(state);
+        switchSuggestion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                pref.edit().putBoolean(Utils.KEY_SUGGESTION, isChecked).apply();
             }
         });
 

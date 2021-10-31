@@ -829,27 +829,20 @@
     },
     {
         "id": 5014,
-        "station": "Eglise de Pantin",
-        "lignes": [
-            5
-        ]
-    },
-    {
-        "id": 5015,
         "station": "Église de Pantin",
         "lignes": [
             5
         ]
     },
     {
-        "id": 5016,
+        "id": 5015,
         "station": "Bobigny - Pantin - Raymond Queneau",
         "lignes": [
             5
         ]
     },
     {
-        "id": 5017,
+        "id": 5016,
         "station": "Bobigny - Pablo Picasso",
         "lignes": [
             5
@@ -1888,7 +1881,7 @@
     },
     {
         "id": 1205,
-        "station": "Vaugirad",
+        "station": "Vaugirard",
         "lignes": [
             12
         ]

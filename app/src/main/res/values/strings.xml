@@ -15,6 +15,9 @@
 
     <string name="dialog_hint_title">Choisissez la bonne station</string>
 
+    <string name="settings_settings_t">Paramètres</string>
+    <string name="settings_suggestions">Auto-compléter le nom des stations</string>
+
     <string name="settings_h2_regles">Règles</string>
     <string name="settings_h2_regles_p1">Vous devez trouver toutes les stations du métro parisien. Le jeu n\'inclue pas les stations de tramway et de RER.</string>
     <string name="settings_h2_regles_p2">La seule règle est la suivante : seules les stations présentes sur la ou les mêmes lignes que la station précédente peuvent être ajoutées.</string>

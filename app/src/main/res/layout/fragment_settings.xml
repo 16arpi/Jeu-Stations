@@ -27,7 +27,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="@string/settings_h2_regles"
+                    android:text="@string/settings_settings_t"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -40,6 +40,27 @@
                     android:padding="8dp"
                     app:srcCompat="@drawable/ic_close" />
             </LinearLayout>
+
+            <Switch
+                android:id="@+id/switchSuggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/settings_suggestions"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/settings_h2_regles"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
 
             <TextView
                 android:id="@+id/textView3"
@@ -171,7 +192,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="8dp"
                 android:text="@string/settings_h2_regles_p8"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
 
             <TextView
@@ -182,7 +203,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="8dp"
                 android:text="@string/settings_h2_regles_p9"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

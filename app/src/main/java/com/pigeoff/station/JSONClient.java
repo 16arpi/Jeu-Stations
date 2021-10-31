@@ -38,7 +38,7 @@ public class JSONClient {
         }
     }
 
-    public static ArrayList<Station> getStationsFromJSON() {
+    public ArrayList<Station> getStationsFromJSON() {
         Gson g = new GsonBuilder().create();
 
         try {
