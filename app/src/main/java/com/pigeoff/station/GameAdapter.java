@@ -98,33 +98,32 @@ public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         else {
             ViewHolder h = (ViewHolder) holder;
 
-            int position = index;
-            final Station station = stations.get(position);
+            final Station station = stations.get(index);
 
             if (getItemCount() == 2) {
                 h.viewDotTop.setVisibility(View.GONE);
                 h.viewDotBottom.setVisibility(View.GONE);
             } else {
-                if (position == 0) {
+                if (index == 0) {
                     h.viewDotTop.setVisibility(View.VISIBLE);
                     h.viewDotBottom.setVisibility(View.GONE);
 
                     h.viewDotTop.setBackgroundColor(
                             ContextCompat.getColor(
                                     context, utils.getColorFromTwoStations(
-                                            stations.get(position+1), station)));
+                                            stations.get(index +1), station)));
                     h.viewDotBottom.setBackgroundColor(
                             ContextCompat.getColor(
                                     context, utils.getColorFromTwoStations(
-                                            stations.get(position+1), station)));
+                                            stations.get(index +1), station)));
 
-                } else if (position == getItemCount()-2) {
+                } else if (index == getItemCount()-2) {
                     h.viewDotTop.setVisibility(View.GONE);
                     h.viewDotBottom.setVisibility(View.VISIBLE);
                     h.viewDotTop.setBackgroundColor(
                             ContextCompat.getColor(
                                     context, utils.getColorFromTwoStations(
-                                            stations.get(position-1), station)));
+                                            stations.get(index -1), station)));
                     h.viewDotBottom.setBackgroundColor(
                             ContextCompat.getColor(
                                     context, utils.getColorFromTwoStations(
@@ -135,11 +134,11 @@ public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     h.viewDotTop.setBackgroundColor(
                             ContextCompat.getColor(
                                     context, utils.getColorFromTwoStations(
-                                            stations.get(position+1), station)));
+                                            stations.get(index +1), station)));
                     h.viewDotBottom.setBackgroundColor(
                             ContextCompat.getColor(
                                     context, utils.getColorFromTwoStations(
-                                            stations.get(position-1), station)));
+                                            stations.get(index -1), station)));
 
                 }
             }
