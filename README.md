@@ -14,6 +14,8 @@ Profitez ainsi des stations avec correspondances (point blanc à la bordure noir
 
 Même si le jeu accepte les erreurs de frappe, vous devez malgré tout écrire le nom complet des stations, comme ils figurent sur le plan de la RATP. Vous pouvez bénéficiez d'un indice en cliquant sur « ? ». Une liste de 4 stations dont une valide vous sera proposée. +1 en cas de victoire, -1 en cas de défaite.
 
+Dans les paramètres, vous pouvez désactiver l'auto-complétion des stations et la sauvegarde automatique de votre partie.
+
 ## Points
 
 * +1 pour une station avec correspondance
