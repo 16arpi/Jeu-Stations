@@ -8,12 +8,14 @@
         <entry key="app/src/main/res/drawable/bg_ripple.xml" value="0.131" />
         <entry key="app/src/main/res/drawable/ic_dot.xml" value="0.2415" />
         <entry key="app/src/main/res/drawable/ic_launcher_v1_foreground.xml" value="0.2105" />
+        <entry key="app/src/main/res/drawable/ic_menu.xml" value="0.228" />
+        <entry key="app/src/main/res/drawable/ic_settings_black_24dp.xml" value="0.228" />
         <entry key="app/src/main/res/drawable/point_correspondance.xml" value="0.2415" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/adapter_game.xml" value="0.45" />
         <entry key="app/src/main/res/layout/adapter_intro.xml" value="0.375" />
         <entry key="app/src/main/res/layout/adapter_suggestion.xml" value="0.45" />
-        <entry key="app/src/main/res/layout/fragment_game.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_game.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.19880290722530997" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_v1.xml" value="0.45" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_v1_round.xml" value="0.2105" />

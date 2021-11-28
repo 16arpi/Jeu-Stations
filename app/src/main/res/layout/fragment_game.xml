@@ -77,6 +77,16 @@
                 android:text="0"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/imageButtonRestart"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:alpha="0.7"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_refresh" />
         </LinearLayout>
 
     </LinearLayout>
@@ -112,7 +122,7 @@
                 android:layout_weight="1"
                 android:alpha="0.7"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@drawable/ic_settings_black_24dp" />
+                app:srcCompat="@drawable/ic_menu" />
 
             <TextView
                 android:id="@+id/textViewNbStations"

@@ -1,4 +1,6 @@
-package com.pigeoff.station;
+package com.pigeoff.station.data;
+
+import com.pigeoff.station.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

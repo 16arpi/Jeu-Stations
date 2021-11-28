@@ -1,24 +1,16 @@
-package com.pigeoff.station;
+package com.pigeoff.station.util;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import com.pigeoff.station.R;
+import com.pigeoff.station.data.Station;
 
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
@@ -27,6 +19,9 @@ public class Utils {
     public static final String KEY_SCORE = "shareddata";
     public static final String KEY_STARTUP = "sharedstart";
     public static final String KEY_SUGGESTION = "sharedsuggest";
+    public static final String KEY_SAVED = "sharedstorage";
+    public static final String KEY_SAVED_SCORE = "sharedstoragescore";
+    public static final String KEY_SAVED_STATIONS = "sharedstoragestations";
 
     private static HashMap<Integer, Integer> colorsRessources = new HashMap<>();
     private static HashMap<Integer, String> lignesNames = new HashMap<>();

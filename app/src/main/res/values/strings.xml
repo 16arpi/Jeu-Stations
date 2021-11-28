@@ -13,10 +13,25 @@
 
     <string name="error_message_completed_line">ligne(s) complète(s), bravo !</string>
 
+    <string name="error">Erreur</string>
+
+    <string name="indicator_hint">Bénéficier d\'un indice</string>
+
     <string name="dialog_hint_title">Choisissez la bonne station</string>
+
+    <string name="dialog_restart_t">Redémarrer la partie</string>
+    <string name="dialog_restart_p">Votre itinéraire et votre score sera remis à zero.</string>
+    <string name="dialog_restart_ok">Confirmer</string>
+    <string name="dialog_restart_no">Annuler</string>
 
     <string name="settings_settings_t">Paramètres</string>
     <string name="settings_suggestions">Auto-compléter le nom des stations</string>
+    <string name="settings_storage">Sauvegarder la partie lors de la fermeture</string>
+
+    <string name="dialog_storage_t">Désactiver la sauvegarde</string>
+    <string name="dialog_storage_p">Si vous désactivez la sauvegarde automatique, votre partie en cours sera perdue.</string>
+    <string name="dialog_storage_btn_ok">Confirmer</string>
+    <string name="dialog_storage_btn_no">Annuler</string>
 
     <string name="settings_h2_regles">Règles</string>
     <string name="settings_h2_regles_p1">Vous devez trouver toutes les stations du métro parisien. Le jeu n\'inclue pas les stations de tramway et de RER.</string>
@@ -39,5 +54,6 @@
 
     <string name="win_message_t" >Felicitations !!! 🎊 🎉 🚇</string>
     <string name="win_message_m" >Bravo, vous avez gagné au jeu des stations ! Si vous avez terminé le jeu sans tricher, je ne peux que vous encourager d\'envoyer votre CV à la RATP.</string>
+
 
 </resources>

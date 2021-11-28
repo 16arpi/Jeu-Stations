@@ -1,10 +1,8 @@
-package com.pigeoff.station;
+package com.pigeoff.station.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,19 +16,25 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.*;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
-import com.pigeoff.station.Utils;
-
-import org.w3c.dom.Text;
+import com.pigeoff.station.data.PartieState;
+import com.pigeoff.station.util.JSONClient;
+import com.pigeoff.station.R;
+import com.pigeoff.station.data.Score;
+import com.pigeoff.station.data.Station;
+import com.pigeoff.station.util.Utils;
+import com.pigeoff.station.adapter.GameAdapter;
+import com.pigeoff.station.adapter.SuggestionAdapter;
 
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.emitters.StreamEmitter;
@@ -46,8 +50,10 @@ public class GameFragment extends Fragment {
     private RecyclerView recyclerView;
     private Score score;
     private OnSettingsBtnClickListener btnSettingsListener;
+    private OnRestartActionListener restartActionListener;
     private Utils utils;
     private SharedPreferences pref;
+    private PartieState partieState;
 
     private TextView textScore;
     private TextView textHighScore;
@@ -58,11 +64,20 @@ public class GameFragment extends Fragment {
 
     public GameFragment() {
         this.btnSettingsListener = null;
+        this.restartActionListener = null;
         this.utils = new Utils();
     }
 
     public interface OnSettingsBtnClickListener {
         void onSettingsBtnClickListener();
+    }
+
+    public interface OnRestartActionListener {
+        void onRestartActionListener();
+    }
+
+    public void setOnRestartActionListener(OnRestartActionListener listener) {
+        this.restartActionListener = listener;
     }
 
     public void setOnSettingsBtnClickListener(OnSettingsBtnClickListener listener) {
@@ -90,7 +105,6 @@ public class GameFragment extends Fragment {
                 gameAdapter.currentStation());
 
         // Creating the dialog with the list
-
         Log.i("Hint stations size", String.valueOf(fourStations.size()));
 
         if (fourStations.size() == 4) {
@@ -112,6 +126,7 @@ public class GameFragment extends Fragment {
                                 score.saveScore(-1, textScore, textHighScore);
                                 Utils.showMessage(getView(), getString(R.string.error_message_hint_fail));
                             }
+                            saveState();
                         }
                     })
                     .show();
@@ -148,6 +163,7 @@ public class GameFragment extends Fragment {
                         score.saveScore(completedLignes.size()*10, textScore, textHighScore);
                     }
                     oneMoreStationFound();
+                    saveState();
                 }
             } else {
                 Utils.showMessage(getView(), getString(R.string.error_message_incorrect));
@@ -167,7 +183,7 @@ public class GameFragment extends Fragment {
         String txt = count+"/"+stations.size();
         textNbStations.setText(txt);
 
-        if (stations.size() == gameAdapter.currentAllStationS().size()) {
+        if (stations.size() == count) {
             showCongrats(
                     konfettiView,
                     new int[] {requireContext().getResources().getColor(R.color.m1),
@@ -183,13 +199,17 @@ public class GameFragment extends Fragment {
                 @Override
                 public void run() {
                     List<Station> suggestions = Utils.getThreeBestStations(stations, gameAdapter.currentAllStationS(), str);
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            suggestionAdapter.setStations(suggestions);
-                        }
-                    });
+                    try {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                suggestionAdapter.setStations(suggestions);
+                            }
+                        });
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        Toast.makeText(requireContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }.start();
 
@@ -210,6 +230,16 @@ public class GameFragment extends Fragment {
         }
     }
 
+    private void saveState() {
+        if (partieState.getSavedOnOff()) {
+            partieState.setSavedScore(score.getScorePartie());
+            partieState.setSavedStationSuccession(gameAdapter.currentAllStationS());
+        } else {
+            partieState.setSavedScore(0);
+            partieState.setSavedStationSuccession(new ArrayList<>());
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,13 +250,15 @@ public class GameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_game, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_game, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Saved State
+        partieState = new PartieState(requireContext());
 
         // Array stations
         JSONClient jsonClient = new JSONClient(requireContext());
@@ -240,6 +272,7 @@ public class GameFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerAutoComplete = view.findViewById(R.id.recyclerViewAutoComplete);
         btnSettings = view.findViewById(R.id.imageButtonSettings);
+        ImageButton btnRestart = view.findViewById(R.id.imageButtonRestart);
         konfettiView = view.findViewById(R.id.viewKonfetti);
         btnHint = view.findViewById(R.id.imageButtonHint);
         final EditText editTextStation = view.findViewById(R.id.editTextStation);
@@ -247,7 +280,7 @@ public class GameFragment extends Fragment {
         // Setting up scores
         score = new Score(requireContext(), textScore, textHighScore);
 
-        // Setting up settings and hint buttons
+        // Setting up settings, restart hint buttons
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,10 +288,50 @@ public class GameFragment extends Fragment {
             }
         });
 
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.dialog_restart_t)
+                        .setMessage(R.string.dialog_restart_p)
+                        .setNegativeButton(R.string.dialog_restart_no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton(R.string.dialog_restart_ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                restartActionListener.onRestartActionListener();
+                                partieState.setSavedScore(0);
+                                partieState.setSavedStationSuccession(new ArrayList<>());
+                            }
+                        })
+                        .show();
+            }
+        });
+
+        btnRestart.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(requireContext(), R.string.dialog_restart_t, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
         btnHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 askForHint();
+            }
+        });
+
+        btnHint.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(requireContext(), R.string.indicator_hint, Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
 
@@ -286,14 +359,28 @@ public class GameFragment extends Fragment {
             }
         });
 
-        // Setting up stations count
-        boolean stop = false;
-        while (!stop) {
-            Station random = stations.get(new Random().nextInt(stations.size() - 1));
-            if (random.getLignes().size() == 1) {
-                gameAdapter.addStation(random);
-                oneMoreStationFound();
-                stop = true;
+        if (partieState.getSavedOnOff() && partieState.getSavedStations().size() > 0) {
+            List<Integer> savedStations = partieState.getSavedStations();
+            for (Integer i : savedStations) {
+                for (Station s : stations) {
+                    if (s.getId().equals(i)) {
+                        gameAdapter.addStation(s);
+                        oneMoreStationFound();
+                    }
+                }
+            }
+
+            score.saveScore(partieState.getSavedScore(), textScore, textHighScore);
+        } else {
+            // Setting up stations count
+            boolean stop = false;
+            while (!stop) {
+                Station random = stations.get(new Random().nextInt(stations.size() - 1));
+                if (random.getLignes().size() == 1) {
+                    gameAdapter.addStation(random);
+                    oneMoreStationFound();
+                    stop = true;
+                }
             }
         }
 

@@ -1,13 +1,15 @@
-package com.pigeoff.station;
+package com.pigeoff.station.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.TextView;
 
+import com.pigeoff.station.util.Utils;
+
 public class Score {
     private int scorePartie;
     private int scoreSaved;
-    private SharedPreferences pref;
+    private final SharedPreferences pref;
 
     public Score(Context context, TextView scoreTxt, TextView highScoreTxt) {
         pref = context.getSharedPreferences(Utils.PREF, Context.MODE_PRIVATE);

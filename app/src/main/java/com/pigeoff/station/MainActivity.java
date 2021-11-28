@@ -1,31 +1,57 @@
 package com.pigeoff.station;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.FrameLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
+import android.os.Bundle;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.pigeoff.station.fragment.GameFragment;
+import com.pigeoff.station.fragment.SettingsBottomSheetFragment;
+import com.pigeoff.station.util.Utils;
 
 public class MainActivity extends AppCompatActivity {
+    private final String GAME_FRAGMENT_TAG = "gamefragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final GameFragment gameFragment = new GameFragment();
-        final BottomSheetDialogFragment settingsSheet = new SettingsBottomSheetFragment();
+        updateUI();
+    }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, gameFragment).commit();
+    private void updateUI() {
+        GameFragment gameFragment = new GameFragment();
+
+        BottomSheetDialogFragment settingsSheet = new SettingsBottomSheetFragment();
+
+        if (getSupportFragmentManager().findFragmentByTag(GAME_FRAGMENT_TAG) == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frameLayout, gameFragment, GAME_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(getSupportFragmentManager().findFragmentByTag(GAME_FRAGMENT_TAG))
+                    .replace(R.id.frameLayout, gameFragment, GAME_FRAGMENT_TAG).commit();
+        }
+
         gameFragment.setOnSettingsBtnClickListener(new GameFragment.OnSettingsBtnClickListener() {
             @Override
             public void onSettingsBtnClickListener() {
                 settingsSheet.show(getSupportFragmentManager(), SettingsBottomSheetFragment.TAG);
+            }
+        });
+
+        gameFragment.setOnRestartActionListener(new GameFragment.OnRestartActionListener() {
+            @Override
+            public void onRestartActionListener() {
+                updateUI();
             }
         });
 

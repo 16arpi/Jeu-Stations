@@ -1,30 +1,24 @@
-package com.pigeoff.station;
+package com.pigeoff.station.adapter;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import org.apache.commons.lang3.StringUtils;
+import com.pigeoff.station.R;
+import com.pigeoff.station.data.Station;
+import com.pigeoff.station.util.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

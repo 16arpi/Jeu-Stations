@@ -50,6 +50,15 @@
                 android:text="@string/settings_suggestions"
                 android:textSize="20sp" />
 
+            <Switch
+                android:id="@+id/switchStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/settings_storage"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView4"
                 style="@style/TextAppearance.AppCompat.Body1"
