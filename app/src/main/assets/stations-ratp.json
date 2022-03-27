@@ -733,6 +733,20 @@
         ]
     },
     {
+        "id": 4025,
+        "station": "Barbara",
+        "lignes": [
+            4
+        ]
+    },
+    {
+        "id": 4026,
+        "station": "Bagneux - Lucie Aubrac",
+        "lignes": [
+            4
+        ]
+    },
+    {
         "id": 5001,
         "station": "Place d'Italie",
         "lignes": [
