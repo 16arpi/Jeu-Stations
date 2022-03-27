@@ -55,5 +55,6 @@
     <string name="win_message_t" >Felicitations !!! 🎊 🎉 🚇</string>
     <string name="win_message_m" >Bravo, vous avez gagné au jeu des stations ! Si vous avez terminé le jeu sans tricher, je ne peux que vous encourager d\'envoyer votre CV à la RATP.</string>
 
+    <string name="crash_message">Sorry, l\'app a planté. Un rapport sera envoyé au développeur.</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.pigeoff.station;
+package com.pigeoff.station.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.pigeoff.station.R;
 import com.pigeoff.station.fragment.GameFragment;
 import com.pigeoff.station.fragment.SettingsBottomSheetFragment;
 import com.pigeoff.station.util.Utils;
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         gameFragment.setOnSettingsBtnClickListener(new GameFragment.OnSettingsBtnClickListener() {
             @Override
             public void onSettingsBtnClickListener() {
-                settingsSheet.show(getSupportFragmentManager(), SettingsBottomSheetFragment.TAG);
+                throw new NullPointerException();
+                //settingsSheet.show(getSupportFragmentManager(), SettingsBottomSheetFragment.TAG);
             }
         });
 
