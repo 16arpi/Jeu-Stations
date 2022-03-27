@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
         gameFragment.setOnSettingsBtnClickListener(new GameFragment.OnSettingsBtnClickListener() {
             @Override
             public void onSettingsBtnClickListener() {
-                throw new NullPointerException();
-                //settingsSheet.show(getSupportFragmentManager(), SettingsBottomSheetFragment.TAG);
+                settingsSheet.show(getSupportFragmentManager(), SettingsBottomSheetFragment.TAG);
             }
         });
 
